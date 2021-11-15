@@ -1,0 +1,11 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+[obj|bin]/
+.idea/
+res/
+temp/
+.vs/
+*.sln.DotSettings.user

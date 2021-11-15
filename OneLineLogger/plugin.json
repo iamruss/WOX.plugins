@@ -1,0 +1,12 @@
+﻿{
+  "ID":"12345020AD814D3C89B4EF7733175505",
+  "ActionKeyword": "*",
+  "Name":"One Line Logger",     
+  "Description":"Type something to have it appended to a log file, one line at a time, prefixed by a timestamp in ISO-8601 format",
+  "Author":"Rouslan Grabar",
+  "Version":"1.0.0",
+  "Language":"csharp",
+  "Website":"https://twitter.com/iamruss",
+  "IcoPath": "logo.png",
+  "ExecuteFileName":"OneLineLogger.dll"
+}
