@@ -15,13 +15,46 @@ namespace OneLineLogger
 
         public List<Result> Query(Query query)
         {
-            if (string.IsNullOrWhiteSpace(query.Search)) return null;
-
             var prefix = string.IsNullOrWhiteSpace(_settings.FilePrefix) ? string.Empty : _settings.FilePrefix;
-            var suffix = string.IsNullOrWhiteSpace(_settings.FileExtension)? "md" : _settings.FileExtension;
-            
+            var suffix = string.IsNullOrWhiteSpace(_settings.FileExtension)
+                ? Constants.DefaultFileExtension
+                : _settings.FileExtension;
+
             var date = DateTime.Now;
             var logFileName = $"{prefix}{date:yyyy-MM-dd}.{suffix}";
+ 
+            if (string.IsNullOrWhiteSpace(query.Search))
+            {
+                return new List<Result>
+                {
+                    new Result()
+                    {
+                        Title = "Open current log file",
+                        SubTitle = $"File location: {_settings.PathToFolder}\\{logFileName}",
+                        IcoPath = "logo.png",
+                        Action = e =>
+                        {
+                            Process.Start(new ProcessStartInfo($"{_settings.PathToFolder}\\{logFileName}")
+                            {
+                                Verb = "edit"
+                            });
+                            return true;
+                        }
+                    },
+                    new Result()
+                    {
+                        Title = "Open notes folder",
+                        SubTitle = $"Folder location: {_settings.PathToFolder}",
+                        IcoPath = "logo.png",
+                        Action = e =>
+                        {
+                            Process.Start(new ProcessStartInfo("explorer.exe", _settings.PathToFolder));
+                            return true;
+                        }
+                    }
+                };
+            }
+
             var timestamp = date.ToString(_settings.TimeStampFormat);
 
             return new List<Result>
@@ -37,32 +70,6 @@ namespace OneLineLogger
                         {
                             streamWriter.WriteLine($"[{timestamp}] {query.Search}");
                         }
-                        return true;
-                    },
-                    
-                },
-                new Result()
-                {
-                    Title = "Open current log file",
-                    SubTitle = $"File location: {_settings.PathToFolder}\\{logFileName}",
-                    IcoPath = "logo.png",
-                    Action = e =>
-                    {
-                        Process.Start(new ProcessStartInfo($"{_settings.PathToFolder}\\{logFileName}")
-                        {
-                            Verb = "edit"
-                        });
-                        return true;
-                    }
-                },
-                new Result()
-                {
-                    Title = "Open notes folder",
-                    SubTitle = $"Folder location: {_settings.PathToFolder}",
-                    IcoPath = "logo.png",
-                    Action = e =>
-                    {
-                        Process.Start(new ProcessStartInfo("explorer.exe", _settings.PathToFolder));
                         return true;
                     }
                 }
