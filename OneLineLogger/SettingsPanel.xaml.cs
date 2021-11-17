@@ -1,5 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Navigation;
 using Wox.Infrastructure.Storage;
@@ -25,15 +27,17 @@ namespace OneLineLogger
             TbPath.Text = _settings.PathToFolder;
             TbFilePrefix.Text = _settings.FilePrefix;
             TbExtension.Text = _settings.FileExtension;
+            TbTimeStampFormat.Text = _settings.TimeStampFormat;
+            TbTimeStampPreview.Content = DateTime.Now.ToString(_settings.TimeStampFormat);
         }
 
         private void OnClick_PickFolder(object sender, RoutedEventArgs e)
         {
-            using(var fbd = new FolderBrowserDialog())
+            using (var fbd = new FolderBrowserDialog())
             {
                 var result = fbd.ShowDialog();
                 if (result != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath)) return;
-                
+
                 TbPath.Text = fbd.SelectedPath;
                 _settings.PathToFolder = fbd.SelectedPath;
                 _storage.Save();
@@ -42,14 +46,14 @@ namespace OneLineLogger
 
         private void TbFilePrefix_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            var text = (( System.Windows.Controls.TextBox)e.Source).Text;
-            _settings.FilePrefix = (text??string.Empty).Trim();
+            var text = ((System.Windows.Controls.TextBox)e.Source).Text;
+            _settings.FilePrefix = (text ?? string.Empty).Trim();
             _storage.Save();
         }
-        
+
         private void TbExtension_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            var text = (( System.Windows.Controls.TextBox)e.Source).Text;
+            var text = ((System.Windows.Controls.TextBox)e.Source).Text;
             _settings.FileExtension = (text ?? "md").Trim('.', ' ');
             _storage.Save();
         }
@@ -64,6 +68,33 @@ namespace OneLineLogger
         {
             Process.Start(new ProcessStartInfo("explorer.exe", _settings.PathToFolder));
             e.Handled = true;
+        }
+
+        private void TbTimeStampFormat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string format;
+            var control = (System.Windows.Controls.TextBox)e.Source;
+            
+            if (string.IsNullOrWhiteSpace(control.Text))
+            {
+                control.Text = Constants.DefaultTimeFormat;
+            }
+
+            try
+            {
+                format = control.Text;
+                var preview = DateTime.Now.ToString(format);
+                TbTimeStampPreview.Content = preview;
+            }
+            catch
+            {
+                TbTimeStampFormat.Text = Constants.DefaultTimeFormat;
+                TbTimeStampPreview.Content = string.Empty;
+                return;
+            }
+
+            _settings.TimeStampFormat = format;
+            _storage.Save();
         }
     }
 }

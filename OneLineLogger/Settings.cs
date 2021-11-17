@@ -8,6 +8,7 @@ namespace OneLineLogger
         private string _fileExtension;
         private string _filePrefix;
         private string _pathToFolder;
+        private string _timeStampFormat;
 
         [JsonProperty]
         public string PathToFolder
@@ -26,15 +27,22 @@ namespace OneLineLogger
         [JsonProperty]
         public string FilePrefix
         {
-            get => _filePrefix ?? "log";
+            get => _filePrefix ?? Constants.DefaultFilePrefix;
             set => _filePrefix = value;
         }
 
         [JsonProperty]
         public string FileExtension
         {
-            get => _fileExtension ?? "md";
+            get => _fileExtension ?? Constants.DefaultFileExtension;
             set => _fileExtension = value;
+        }
+
+        [JsonProperty]
+        public string TimeStampFormat
+        {
+            get => _timeStampFormat ?? Constants.DefaultTimeFormat;
+            set => _timeStampFormat = value;
         }
     }
 }

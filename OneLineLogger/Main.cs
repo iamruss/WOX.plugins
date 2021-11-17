@@ -22,14 +22,14 @@ namespace OneLineLogger
             
             var date = DateTime.Now;
             var logFileName = $"{prefix}{date:yyyy-MM-dd}.{suffix}";
-            var timestamp = date.ToString("O");
+            var timestamp = date.ToString(_settings.TimeStampFormat);
 
             return new List<Result>
             {
                 new Result()
                 {
                     Title = $"Write to log: {query.Search}",
-                    SubTitle = $"With timestamp {DateTime.Now:O}",
+                    SubTitle = $"With timestamp {timestamp}",
                     IcoPath = "logo.png",
                     Action = e =>
                     {
@@ -37,6 +37,32 @@ namespace OneLineLogger
                         {
                             streamWriter.WriteLine($"[{timestamp}] {query.Search}");
                         }
+                        return true;
+                    },
+                    
+                },
+                new Result()
+                {
+                    Title = "Open current log file",
+                    SubTitle = $"File location: {_settings.PathToFolder}\\{logFileName}",
+                    IcoPath = "logo.png",
+                    Action = e =>
+                    {
+                        Process.Start(new ProcessStartInfo($"{_settings.PathToFolder}\\{logFileName}")
+                        {
+                            Verb = "edit"
+                        });
+                        return true;
+                    }
+                },
+                new Result()
+                {
+                    Title = "Open notes folder",
+                    SubTitle = $"Folder location: {_settings.PathToFolder}",
+                    IcoPath = "logo.png",
+                    Action = e =>
+                    {
+                        Process.Start(new ProcessStartInfo("explorer.exe", _settings.PathToFolder));
                         return true;
                     }
                 }

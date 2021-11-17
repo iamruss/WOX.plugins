@@ -9,17 +9,20 @@
     <Grid>
         <Label Margin="5,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="145" Height="25" >Log files will be saved to:</Label>
         <TextBox x:Name="TbPath" Margin="148,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="280" Height="20" IsReadOnly="True"></TextBox>
-        <Button Click="OnClick_PickFolder" Margin="428,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsDefault="True" Width="29" Height="20">...</Button>
+        <Button Click="OnClick_PickFolder" Margin="427,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsDefault="True" Width="29" Height="20">...</Button>
         <Label Margin="54,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="94" Height="25" Content="Filename Prefix:" />
         <TextBox x:Name="TbFilePrefix" Margin="148,45,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="172" Height="20" IsReadOnly="False" TextChanged="TbFilePrefix_TextChanged"/>
         <Label Margin="33,72,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114" Height="25" Content="Filename Extension:" />
         <TextBox x:Name="TbExtension" Margin="148,77,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="172" Height="20" IsReadOnly="False" TextChanged="TbExtension_TextChanged"/>
-        <Label Margin="25,110,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="445" Height="30" Content="Plugin icon is courtesy of " />
-        <TextBlock  Margin="168,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Height="20">           
+        <Label Margin="57,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="448" Height="30" Content="Plugin icon is courtesy of " />
+        <TextBlock  Margin="201,143,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="118" Height="20">           
             <Hyperlink NavigateUri="https://icons8.ru" RequestNavigate="Hyperlink_RequestNavigate">
-                https://icons8.ru/
+                <Run Text="https://icons8.ru/"></Run>
             </Hyperlink>
         </TextBlock>
-        <TextBlock  Margin="465,17,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Height="20"><Hyperlink NavigateUri="x" RequestNavigate="Hyperlink_ShowFolder"><Run Text="View"/></Hyperlink></TextBlock>
+        <TextBlock  Margin="464,17,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Height="20"><Hyperlink NavigateUri="x" RequestNavigate="Hyperlink_ShowFolder"><Run Text="View"/></Hyperlink></TextBlock>
+        <Label Margin="34,104,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114" Height="25" Content="TimeStamp Format:" />
+        <TextBox x:Name="TbTimeStampFormat" Margin="148,109,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="172" Height="20" IsReadOnly="False" TextChanged="TbTimeStampFormat_TextChanged"/>
+        <Label x:Name="TbTimeStampPreview" Margin="325,104,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Height="25" Content="" />
     </Grid>
 </UserControl>
