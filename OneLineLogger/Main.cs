@@ -22,7 +22,8 @@ namespace OneLineLogger
 
             var date = DateTime.Now;
             var logFileName = $"{prefix}{date:yyyy-MM-dd}.{suffix}";
- 
+
+            var fileName = $"{_settings.PathToFolder}\\{logFileName}";
             if (string.IsNullOrWhiteSpace(query.Search))
             {
                 return new List<Result>
@@ -30,11 +31,17 @@ namespace OneLineLogger
                     new Result()
                     {
                         Title = "Open current log file",
-                        SubTitle = $"File location: {_settings.PathToFolder}\\{logFileName}",
+                        SubTitle = $"File location: {fileName}",
                         IcoPath = "logo.png",
                         Action = e =>
                         {
-                            Process.Start(new ProcessStartInfo($"{_settings.PathToFolder}\\{logFileName}")
+                            if (!File.Exists(fileName))
+                            {
+                                using (File.Create(fileName))
+                                {
+                                }
+                            }
+                            Process.Start(new ProcessStartInfo(fileName)
                             {
                                 Verb = "edit"
                             });
@@ -66,7 +73,7 @@ namespace OneLineLogger
                     IcoPath = "logo.png",
                     Action = e =>
                     {
-                        using (var streamWriter = File.AppendText($"{_settings.PathToFolder}\\{logFileName}"))
+                        using (var streamWriter = File.AppendText(fileName))
                         {
                             streamWriter.WriteLine($"[{timestamp}] {query.Search}");
                         }

@@ -4,7 +4,7 @@
   "Name":"One Line Logger",     
   "Description":"Type something to have it appended to a log file, one line at a time, prefixed by a customizable timestamp",
   "Author":"Rouslan Grabar",
-  "Version":"1.0.0",
+  "Version":"1.0.1",
   "Language":"csharp",
   "Website":"https://twitter.com/iamruss",
   "IcoPath": "logo.png",
